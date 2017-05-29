@@ -15,7 +15,7 @@ std::vector<std::experimental::filesystem::path> fetchAllFiles(
     const auto filter = [&excluded, &exp, &match](auto fs) {
         for (auto e : excluded) {
             auto s = fs.path().string();
-            int rv = regcomp(&exp, e.c_str(), REG_EXTENDED);
+            regcomp(&exp, e.c_str(), REG_EXTENDED);
             if (regexec(&exp, s.c_str(), 1, &match, 0) == 0) {
                 return false;
             }
