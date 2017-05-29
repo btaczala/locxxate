@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <cxxopts.hpp>
 #include <experimental/filesystem>
@@ -25,14 +26,16 @@ int main(int argc, char *argv[]) {
         std::cout << opts.help({""}) << std::endl;
         return EXIT_SUCCESS;
     }
+    std::vector<std::string> splits;
 
     if (opts.count("e")) {
         auto s = opts["e"].as<std::string>();
         std::cout << "excluded options " << s << std::endl;
+        boost::split(splits, s, boost::is_any_of(","));
     }
 
     auto t = jrd::time::make_time<std::chrono::milliseconds>();
-    const auto fAll = fetchAllFiles(opts["r"].as<std::string>(), {".*modules.*"});
+    const auto fAll = fetchAllFiles(opts["r"].as<std::string>(), splits);
     const std::string searched =
         opts.count("s") ? opts["s"].as<std::string>() : "";
 

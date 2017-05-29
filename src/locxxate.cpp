@@ -1,7 +1,7 @@
 #include "locxxate.h"
+#include <regex.h>
 #include <algorithm>
 #include <iostream>
-#include <regex>
 
 std::vector<std::experimental::filesystem::path> fetchAllFiles(
     const std::string& dir, const std::vector<std::string>& excluded) {
@@ -10,16 +10,19 @@ std::vector<std::experimental::filesystem::path> fetchAllFiles(
 
     std::vector<std::experimental::filesystem::path> dirs;
     fs::path p;
-    auto filter = [&excluded](auto fs) {
+    regex_t exp;
+    regmatch_t match;
+    const auto filter = [&excluded, &exp, &match](auto fs) {
         for (auto e : excluded) {
-            const std::regex reg{e, std::regex_constants::basic};
             auto s = fs.path().string();
-            if (std::regex_search(s, reg)) {
-                return true;
+            int rv = regcomp(&exp, e.c_str(), REG_EXTENDED);
+            if (regexec(&exp, s.c_str(), 1, &match, 0) == 0) {
+                return false;
             }
         }
-        return false;
+        return true;
     };
+
     std::copy_if(fs::recursive_directory_iterator(dir),
                  fs::recursive_directory_iterator(), std::back_inserter(dirs),
                  filter);
