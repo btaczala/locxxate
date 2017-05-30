@@ -14,8 +14,11 @@ std::vector<std::experimental::filesystem::path> fetchAllFiles(
 std::vector<std::experimental::filesystem::path> loadDirs(
     const std::string& dir) {
     std::vector<std::experimental::filesystem::path> dirs;
-    std::copy(fs::recursive_directory_iterator(dir),
-              fs::recursive_directory_iterator(), std::back_inserter(dirs));
+    try {
+        std::copy(fs::recursive_directory_iterator(dir),
+                  fs::recursive_directory_iterator(), std::back_inserter(dirs));
+    } catch (const std::exception& ex) {
+    }
 
     return dirs;
 }
