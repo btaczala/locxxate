@@ -10,3 +10,4 @@ list(APPEND CMAKE_CXX_FLAGS "-Wall -Werror")
 
 add_subdirectory(3rdParty/cxxopts)
 add_subdirectory(src)
+add_subdirectory(tests)
