@@ -4,3 +4,9 @@
 [submodule "3rdParty/catch"]
 	path = 3rdParty/catch
 	url = https://github.com/philsquared/Catch.git
+[submodule "3rdParty/benchmark"]
+	path = 3rdParty/benchmark
+	url = https://github.com/google/benchmark.git
+[submodule "3rdParty/spdlog"]
+	path = 3rdParty/spdlog
+	url = https://github.com/gabime/spdlog.git
