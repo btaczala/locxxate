@@ -22,7 +22,7 @@ TEST_CASE("filter dirs", "[loadDirs],[filter]") {
 
     auto v = loadDirs(base_dir);
 
-    v = filter(v, {"one"});
+    v = filter(v, {".*one.*"});
     REQUIRE(v.size() == paths.size() - 1);
 
     v = filter(v, paths);

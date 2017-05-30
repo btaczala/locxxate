@@ -22,6 +22,7 @@ std::vector<std::experimental::filesystem::path> loadDirs(
 
     return dirs;
 }
+
 std::vector<std::experimental::filesystem::path> filter(
     const std::vector<std::experimental::filesystem::path>& entries,
     const std::vector<std::string>& excluded) {
