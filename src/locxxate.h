@@ -16,4 +16,6 @@ std::vector<std::experimental::filesystem::path> filter(
     const std::vector<std::experimental::filesystem::path>& entries , const
         std::vector<std::string>& excluded = {});
 
+void setupLogger(bool verbose);
+
 #endif /* end of include guard: LOCXXATE_H_B86LVQXX */

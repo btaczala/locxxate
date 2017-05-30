@@ -4,15 +4,16 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 #include "dbiface.hpp"
 
 struct DB {
-    DB(const std::string& path);
+    DB(std::unique_ptr<DBInterface>&& iface); 
 
-    void search();
+    void create(const std::string& rootDir, const std::vector<std::string>& excludes);
 
    private:
-    std::unique_ptr<DBInterface> impl;
+    const std::unique_ptr<DBInterface> impl;
 };
 
 #endif /* end of include guard: DB_H_Q3WAYG0M */

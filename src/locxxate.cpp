@@ -1,8 +1,11 @@
 #include "locxxate.h"
+#include "log.hpp"
+
 #include <regex.h>
 #include <algorithm>
 #include <iostream>
 
+std::shared_ptr<spdlog::logger> kDefaultLogger;
 namespace fs = std::experimental::filesystem;
 std::vector<std::experimental::filesystem::path> fetchAllFiles(
     const std::string& dir, const std::vector<std::string>& excluded) {
@@ -14,10 +17,12 @@ std::vector<std::experimental::filesystem::path> fetchAllFiles(
 std::vector<std::experimental::filesystem::path> loadDirs(
     const std::string& dir) {
     std::vector<std::experimental::filesystem::path> dirs;
+    auto it = fs::recursive_directory_iterator(dir);
     try {
-        std::copy(fs::recursive_directory_iterator(dir),
+        std::copy(it,
                   fs::recursive_directory_iterator(), std::back_inserter(dirs));
     } catch (const std::exception& ex) {
+        error("Exception {} thrown while iterating over {}", ex.what(), dir);
     }
 
     return dirs;
@@ -45,4 +50,14 @@ std::vector<std::experimental::filesystem::path> filter(
                  filter);
 
     return dirs;
+}
+
+void setupLogger(bool verbose) {
+    kDefaultLogger = spdlog::stdout_color_mt("locxxate");
+
+    if (verbose) {
+        kDefaultLogger->set_level(spdlog::level::trace);
+    } else {
+        kDefaultLogger->set_level(spdlog::level::off);
+    }
 }
