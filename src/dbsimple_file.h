@@ -10,6 +10,7 @@ struct DBSimpleFile : public DBInterface {
 
    private:
     const std::string _path;
+    std::vector<std::experimental::filesystem::path> _database;
 };
 
 #endif /* end of include guard: DBSIMPLE_FILE_H_P05XBQTN */

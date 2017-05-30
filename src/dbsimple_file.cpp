@@ -19,12 +19,11 @@ DBSimpleFile::DBSimpleFile(const std::string& path) : _path(path) {
 
     file.open(path.c_str());
 
-    std::vector<fs::path> db;
 
     std::copy(std::istream_iterator<fs::path>(file),
-              std::istream_iterator<fs::path>(), std::back_inserter(db));
+              std::istream_iterator<fs::path>(), std::back_inserter(_database));
 
-    debug("Read entries {}", db.size());
+    debug("Read entries {}", _database.size());
 }
 
 void DBSimpleFile::store(
