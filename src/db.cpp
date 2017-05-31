@@ -3,9 +3,7 @@
 #include "locxxate.h"
 #include "log.hpp"
 
-DB::DB(std::unique_ptr<DBInterface>&& iface)
-    : impl(std::move(iface)) {
-}
+DB::DB(std::unique_ptr<DBInterface>&& iface) : impl(std::move(iface)) {}
 
 void DB::create(const std::string& rootDir,
                 const std::vector<std::string>& excludes) {
@@ -13,18 +11,16 @@ void DB::create(const std::string& rootDir,
     fAll = filter(fAll, excludes);
 
     debug("Found {} files ", fAll.size());
-    
     impl->store(fAll);
+}
 
-    // auto it =
-    // std::find_if(fAll.begin(), fAll.end(), [&searched](const auto& v) {
-    // return boost::contains(v.filename().string(), searched);
-    //});
+std::vector<std::string> DB::search(const std::string& name) {
+    auto paths = impl->search(name);
 
-    // while (it != fAll.end()) {
-    // it = std::find_if(++it, fAll.end(), [&searched](const auto& v) {
-    // return boost::contains(v.filename().string(), searched);
-    //});
-    //}
-    // std::cout << std::fixed << t << " ms" << std::endl;
+    std::vector<std::string> sPaths;
+
+    std::transform(paths.begin(), paths.end(), std::back_inserter(sPaths),
+                   [](auto v) { return v.string(); });
+
+    return sPaths;
 }

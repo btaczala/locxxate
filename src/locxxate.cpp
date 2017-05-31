@@ -31,6 +31,9 @@ std::vector<std::experimental::filesystem::path> loadDirs(
 std::vector<std::experimental::filesystem::path> filter(
     const std::vector<std::experimental::filesystem::path>& entries,
     const std::vector<std::string>& excluded) {
+
+    debug("Filtering entries with {}", excluded);
+
     std::vector<std::experimental::filesystem::path> dirs;
     fs::path p;
 

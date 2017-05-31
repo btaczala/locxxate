@@ -1,8 +1,18 @@
 #include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 #include <cstring>
 #include <memory>
+#include <iostream>
 
 extern std::shared_ptr<spdlog::logger> kDefaultLogger;
+
+namespace std {
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
+    for (const auto& o : v) os << o << std::endl ;
+    return os;
+}
+}  // namespace std
 
 #define __FILENAME__ \
     (std::strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)

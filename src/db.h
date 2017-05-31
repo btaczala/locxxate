@@ -9,8 +9,9 @@
 
 struct DB {
     DB(std::unique_ptr<DBInterface>&& iface); 
-
     void create(const std::string& rootDir, const std::vector<std::string>& excludes);
+
+    std::vector<std::string> search(const std::string& name);
 
    private:
     const std::unique_ptr<DBInterface> impl;
